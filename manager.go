@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/gob"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -52,6 +53,15 @@ type result struct {
 
 //GetManager 获取Manager
 func GetManager(dir string) *Manager {
+	fi, err := os.Stat(dir)
+	if err != nil {
+		panic(err)
+	}
+
+	if !fi.IsDir() {
+		panic(errors.New("Dir " + dir + " is not a directory"))
+	}
+
 	cfg := config{dir: dir, suffix: ".bf"}
 
 	m := &Manager{cfg: cfg, loadReqs: make(chan *loadRequest), makeReqs: make(chan *makeRequest)}
