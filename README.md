@@ -17,7 +17,7 @@
 ```go
     m := bloom.GetManager("/your/path/")
 	filter := "first-test"
-	result := m.Check(filter, "test-data")
+	result, err := m.Check(filter, "test-data")
 ```
 
 
