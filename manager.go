@@ -169,8 +169,6 @@ func (manager *Manager) server() {
 			}
 
 			go e.deliver(mr.response)
-		default:
-			break
 		}
 	}
 }
