@@ -179,6 +179,8 @@ func (e *entry) load(manager *Manager, name string) {
 	raw, err := ioutil.ReadFile(path)
 	if err != nil {
 		e.res = &result{nil, err}
+		close(e.ready)
+		return
 	}
 
 	buffer := bytes.NewBuffer(raw)
@@ -188,6 +190,8 @@ func (e *entry) load(manager *Manager, name string) {
 	err = decoder.Decode(&filter)
 	if err != nil {
 		e.res = &result{nil, err}
+		close(e.ready)
+		return
 	}
 
 	fw := &FilterWrapper{Filter: &filter, fileName: path, filterName: name}
